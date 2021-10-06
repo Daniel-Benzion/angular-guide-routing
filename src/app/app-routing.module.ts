@@ -10,17 +10,36 @@ import { UserComponent } from "./users/user/user.component";
 import { UsersComponent } from "./users/users.component";
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'users', component: UsersComponent, children: [
-      { path: ':id/:name', component: UserComponent }
-    ] },
-    { path: 'servers', canActivate: [AuthGuardService], component: ServersComponent, children: [
-      { path: ':id', component: ServerComponent },
-      { path: ':id/:edit', component: EditServerComponent }
-    ] },
-    { path: 'not-found', component: PageNotFoundComponent },
-    { path: '**', redirectTo: '/not-found' }
-  ];
+    { 
+        path: '',
+        component: HomeComponent
+    },
+    { 
+        path: 'users', 
+        component: UsersComponent, 
+        children: [
+            { path: ':id/:name', component: UserComponent }
+        ] 
+    },
+    { 
+        path: 'servers', 
+        // canActivate: [AuthGuardService],
+        canActivateChild: [AuthGuardService], 
+        component: ServersComponent, 
+        children: [
+            { path: ':id', component: ServerComponent },
+            { path: ':id/:edit', component: EditServerComponent }
+        ] 
+    },
+    { 
+        path: 'not-found', 
+        component: PageNotFoundComponent 
+    },
+    { 
+        path: '**', 
+        redirectTo: '/not-found' 
+    }
+];
 
 @NgModule({
     imports: [
